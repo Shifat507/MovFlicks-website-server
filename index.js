@@ -45,12 +45,36 @@ async function run() {
         })
 
         // Delete a item :
-        app.delete('/movies/:id', async(req, res)=>{
+        app.delete('/movies/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
             const result = await movieCollectionDB.deleteOne(query);
             res.send(result);
         })
+
+        //Update a Data---->
+        app.put('/movies/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updateMovie = req.body;
+            const movie = {
+                $set: {
+                    poster: updateMovie.poster,
+                    title: updateMovie.title,
+                    genre: updateMovie.genre,
+                    duration: updateMovie.duration,
+                    year: updateMovie.year,
+                    rating: updateMovie.rating,
+                    summary: updateMovie.summary
+                }
+            }
+
+
+            const result = await movieCollectionDB.updateOne(filter, movie, options)
+            res.send(result);
+        })
+
 
 
         // create DB
