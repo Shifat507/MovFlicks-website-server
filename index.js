@@ -36,16 +36,6 @@ async function run() {
             res.send(result);
         })
 
-        // app.get('/movies', async (req, res) => {
-        //     const email = req.query.email; // Get the email from the query parameter
-            
-        //     const query = { userEmail: email }; // Filter movies by the user's email
-        
-        //     const cursor = movieCollectionDB.find(query);
-        //     const result = await cursor.toArray();
-        //     res.send(result);
-        // });
-        
 
         //Get a individual data by id in API --->
         app.get('/movies/:id', async (req, res) => {
@@ -54,7 +44,7 @@ async function run() {
             const result = await movieCollectionDB.findOne(query);
             res.send(result);
         })
-
+        
         // Delete a item :
         app.delete('/movies/:id', async (req, res) => {
             const id = req.params.id;
