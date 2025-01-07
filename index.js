@@ -28,6 +28,7 @@ async function run() {
         // await client.connect();
 
         const movieCollectionDB = client.db("movieDB").collection("movie");
+        const newsCollectionDB = client.db("movieDB").collection("news");
 
         //Read data / send all data to the localhost (API) from DB
         app.get('/movies', async (req, res) => {
@@ -78,11 +79,17 @@ async function run() {
 
 
 
-        // create DB
+        // add movies into DB
         app.post('/movies', async (req, res) => {
             const newMovies = req.body;
             console.log(newMovies);
             const result = await movieCollectionDB.insertOne(newMovies);
+            res.send(result);
+        })
+
+        // -------------New Related APIs----------
+        app.get('/news', async(req, res)=>{
+            const result = await newsCollectionDB.find().toArray();
             res.send(result);
         })
 
